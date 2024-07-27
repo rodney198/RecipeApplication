@@ -43,7 +43,7 @@ class RecipeTVCell: UITableViewCell {
         baseView.layer.shadowOpacity = 1
         baseView.layer.shadowOffset = .zero
         baseView.layer.shadowRadius = 10
-        registerCollectionView(width: 90, height: 90, cellReuseIdentifier: "IngredientsCVCell")
+        registerCollectionView(width: 90, height: 100, cellReuseIdentifier: "IngredientsCVCell")
         ingredientsCV.delegate = self
         ingredientsCV.dataSource = self
     }

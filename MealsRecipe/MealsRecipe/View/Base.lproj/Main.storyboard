@@ -222,6 +222,7 @@
                         <outlet property="descriptionLbl" destination="GH0-N9-QFa" id="QVy-cI-8AN"/>
                         <outlet property="dismissBtn" destination="IqZ-Pt-OoL" id="PsV-jP-LeU"/>
                         <outlet property="ingredientListTV" destination="FGc-wT-W19" id="ZfS-A1-vJT"/>
+                        <outlet property="listCountLbl" destination="v7b-9P-kos" id="C8C-Rh-gey"/>
                         <outlet property="titleLbl" destination="Uve-q0-sTf" id="Pqm-1G-efu"/>
                         <outlet property="viewYoutubebtn" destination="sWH-ud-E3Q" id="0N1-qu-goq"/>
                     </connections>

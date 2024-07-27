@@ -17,6 +17,7 @@ class RecipeDetailsVC: UIViewController {
     @IBOutlet weak var descriptionLbl: UILabel!
     @IBOutlet weak var dismissBtn: UIButton!
     @IBOutlet weak var viewYoutubebtn: UIButton!
+    @IBOutlet weak var listCountLbl: UILabel!
     
     let ingredientCellReuseIdentifier = "IngredientsTVCell"
     //MARK:- Category Detail Declaration
@@ -62,6 +63,10 @@ class RecipeDetailsVC: UIViewController {
         }
         self.titleLbl.text = recipeDetail?.strMeal
         self.descriptionLbl.text = recipeDetail?.strInstructions
+        // Safely get the count and format the string
+        let count = recipeDetail?.ingredients.count ?? 0
+        let formattedString = "\(count) items"
+        self.listCountLbl.text = formattedString
     }
     
     func imageUrl(for ingredient: String) -> URL? {

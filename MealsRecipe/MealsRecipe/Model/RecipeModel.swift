@@ -38,23 +38,19 @@ struct Meal: Codable {
         strMealThumb = try container.decode(String.self, forKey: .strMealThumb)
         strYoutube = try? container.decode(String.self, forKey: .strYoutube)
         
-        var ingredients: [String?] = []
-        var measures: [String?] = []
+        var ingredients: [String] = []
+        var measures: [String] = []
         
         for i in 1...20 {
             let ingredientKey = CodingKeys(rawValue: "strIngredient\(i)")!
             let measureKey = CodingKeys(rawValue: "strMeasure\(i)")!
             
-            if let ingredient = try? container.decode(String.self, forKey: ingredientKey) {
+            if let ingredient = try? container.decode(String.self, forKey: ingredientKey), !ingredient.isEmpty {
                 ingredients.append(ingredient)
-            } else {
-                ingredients.append(nil)
             }
             
-            if let measure = try? container.decode(String.self, forKey: measureKey) {
+            if let measure = try? container.decode(String.self, forKey: measureKey), !measure.isEmpty {
                 measures.append(measure)
-            } else {
-                measures.append(nil)
             }
         }
         
