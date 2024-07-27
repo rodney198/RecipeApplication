@@ -34,10 +34,17 @@ class RecipeDetailsVC: UIViewController {
     }
     
     @IBAction func viewYouTube() {
-        let youTubeUrl = recipeDetail?.strYoutube
-        if let url = URL(string: "\(String(describing: youTubeUrl))"), !url.absoluteString.isEmpty {
-               UIApplication.shared.open(url, options: [:], completionHandler: nil)
-           }
+        let urlData = recipeDetail?.strYoutube as? String
+        guard let linkURL = URL(string: urlData ?? "https://apple.com") else {
+            print("Invalid URL")
+            return
+        }
+        
+        if UIApplication.shared.canOpenURL(linkURL) {
+            UIApplication.shared.open(linkURL, options: [:], completionHandler: nil)
+        } else {
+            print("Cannot open URL")
+        }
     }
     
     func setupTableView() {
