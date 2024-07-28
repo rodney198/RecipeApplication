@@ -49,14 +49,21 @@ class ViewController: UIViewController {
         }
     }
     
-    @objc  func passDatatoNextVC(_ sender: UIButton){
-        let recipeDetail = recipeDetail?[sender.tag]
+    @objc func handleLabelTap(_ gesture: UITapGestureRecognizer) {
+        guard let label = gesture.view as? UILabel else { return }
+        
+        // Get the index of the cell (row) that contains the tapped label
+        let rowIndex = label.tag
+        print("Label tapped in row \(rowIndex)!")
+        let recipeDetail = recipeDetail?[rowIndex]
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let nextViewController = storyBoard.instantiateViewController(withIdentifier: "RecipeDetailsVC") as! RecipeDetailsVC
         nextViewController.recipeDetail = recipeDetail
         nextViewController.modalPresentationStyle = .fullScreen
         self.present(nextViewController, animated: true, completion: nil)
-       }
+    }
+    
+    
 }
 
 
@@ -76,17 +83,24 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         cell.recipeDetail = recipeDetail?[indexPath.row]
         let recipeDetail = recipeDetail?[indexPath.row]
         
-        //Add Tag to the Button
-        cell.viewmoreBTN.tag = indexPath.row
-        cell.viewmoreBTN.addTarget(self, action: #selector(passDatatoNextVC), for: .touchUpInside)
-        cell.viewmoreBTN.titleLabel?.font = UIFont(name: "Avenir Next", size: 14)
+//        //Add Tag to the Button
+//        cell.viewmoreBTN.tag = indexPath.row
+//        cell.viewmoreBTN.addTarget(self, action: #selector(passDatatoNextVC), for: .touchUpInside)
+//        cell.viewmoreBTN.titleLabel?.font = UIFont(name: "Avenir Next", size: 14)
         
         cell.title.text = recipeDetail?.strMeal
         if let fullString = recipeDetail?.strInstructions {
             // Slice the string to get the first 15 characters and convert to String
             let truncatedString = String(fullString.prefix(72))
             // Set the truncated string to the label
-            cell.recipeDesc.text = truncatedString
+            let fulltext = "\(truncatedString) View More"
+            let attrString = StringHelper.shared.createAttributedString(fullText: fulltext)
+            cell.recipeDesc.attributedText = attrString
+            cell.recipeDesc.isUserInteractionEnabled = true
+            // Add gesture recognizer to the label
+            cell.recipeDesc.tag = indexPath.row
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleLabelTap(_:)))
+            cell.recipeDesc.addGestureRecognizer(tapGesture)
         } else {
             // Handle the case where `fullString` is nil, if needed
             cell.recipeDesc.text = "No description available"
@@ -101,4 +115,5 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 450
     }
+    
 }

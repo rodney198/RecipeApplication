@@ -18,3 +18,8 @@ extension UIView {
     }
 
 }
+
+
+extension NSAttributedString.Key {
+    static let customAttributeKey = NSAttributedString.Key("CustomAttributeKey")
+}
